@@ -5,3 +5,8 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Welcome! Please select the language you would like to translate")
+
+def landing(request):
+	context = {
+	}
+	return render(request, 'home/holly.html', context)
