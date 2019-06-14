@@ -9,4 +9,4 @@ def index(request):
 def landing(request):
 	context = {
 	}
-	return render(request, 'home/holly.html', context)
+	return render(request, 'landing/index.html', context)
