@@ -2,8 +2,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from .models import Choice, Question
-
+from .models import Choice, Question, Phrase, Burarra
+import random
+from .forms import TextForm
+from django.shortcuts import redirect
 # Create your views here.
 
 # def index(request):
@@ -18,6 +20,37 @@ from .models import Choice, Question
 # def results(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)
 #     return render(request, 'language/results.html', {'question': question})
+
+def burarra(request):
+    global phrase
+
+    if request.method == 'POST':
+            form_p = TextForm(request.POST)
+            if form_p.is_valid():
+                print(form_p.cleaned_data['translation'])
+                burarra_translation = Burarra.objects.create(phrase=phrase, translation_text=form_p.cleaned_data['translation'])
+                burarra_translation.save()
+                phrase = random.choice(Phrase.objects.all())
+                form = TextForm(request.POST)
+                context = {
+                'phrase' : phrase,
+                'form':form
+                }
+                #return render(request, 'language/burarra.html', context)
+                return redirect('/language/burarra')
+
+    phrase = random.choice(Phrase.objects.all())
+    form = TextForm(request.POST)
+    context = {
+    'phrase' : phrase,
+    'form':form
+    }        
+    return render(request, 'language/burarra.html', context)
+
+def warlpiri(request):
+    context = {
+    }
+    return render(request, 'language/warlpiri.html', context)
 
 
 class IndexView(generic.ListView):
