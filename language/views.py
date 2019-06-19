@@ -21,6 +21,8 @@ from django.shortcuts import redirect
 #     question = get_object_or_404(Question, pk=question_id)
 #     return render(request, 'language/results.html', {'question': question})
 
+phrase = random.choice(Phrase.objects.all())
+
 def burarra(request):
     global phrase
 
