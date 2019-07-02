@@ -26,7 +26,7 @@ SECRET_KEY = 'cyvx_hb6diftc3@1vapy6ynv(t_)pusut(xmwd9%nxtahpa$sv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wengga.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['wengga.org', 'wengga.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
