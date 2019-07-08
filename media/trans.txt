@@ -1,0 +1,5 @@
+This is translated text.
+This is also.
+
+Eso es texto traducido.
+Eso no.
