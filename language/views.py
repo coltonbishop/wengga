@@ -6,6 +6,9 @@ from .models import Choice, Question, Phrase, Burarra
 import random
 from .forms import TextForm
 from django.shortcuts import redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
 # Create your views here.
 
 # def index(request):
@@ -27,11 +30,15 @@ def burarra(request):
     global phrase
 
     if request.method == 'POST':
-            form_p = TextForm(request.POST)
-            if form_p.is_valid():
-                print(form_p.cleaned_data['translation'])
-                burarra_translation = Burarra.objects.create(phrase=phrase, translation_text=form_p.cleaned_data['translation'])
-                burarra_translation.save()
+
+        form_p = TextForm(request.POST)
+        if form_p.is_valid():
+
+            # Translated File Upload 
+            if 'myfile' in request.FILES:
+                myfile = request.FILES['myfile']
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
                 phrase = random.choice(Phrase.objects.all())
                 form = TextForm(request.POST)
                 context = {
@@ -40,6 +47,19 @@ def burarra(request):
                 }
                 #return render(request, 'language/burarra.html', context)
                 return redirect('/language/burarra')
+
+            # Translation Text Upload
+            print(form_p.cleaned_data['translation'])
+            burarra_translation = Burarra.objects.create(phrase=phrase, translation_text=form_p.cleaned_data['translation'])
+            burarra_translation.save()
+            phrase = random.choice(Phrase.objects.all())
+            form = TextForm(request.POST)
+            context = {
+            'phrase' : phrase,
+            'form':form
+            }
+            #return render(request, 'language/burarra.html', context)
+            return redirect('/language/burarra')
 
     phrase = random.choice(Phrase.objects.all())
     form = TextForm(request.POST)
