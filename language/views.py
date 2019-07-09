@@ -46,7 +46,6 @@ def burarra(request):
             #return render(request, 'language/burarra.html', context)
             return redirect('/language/burarra')
 
-
     if request.method == 'POST':
         if request.method == 'POST' and request.FILES['myfile']:
             print("saving file...")
