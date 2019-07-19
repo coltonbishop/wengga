@@ -38,7 +38,9 @@ def burarra(request):
         if form_p.is_valid():
             # Translation Text Upload
             print(form_p.cleaned_data['translation'])
-            burarra_translation = Burarra.objects.create(phrase=phrase, translation_text=form_p.cleaned_data['translation'])
+            phrase_instance = Phrase(phrase_text=phrase)
+            phrase_instance.save()
+            burarra_translation = Burarra.objects.create(phrase=phrase_instance, translation_text=form_p.cleaned_data['translation'])
             burarra_translation.save()
             # phrase = random.choice(Phrase.objects.all())
             phrase = critical_phrase()
