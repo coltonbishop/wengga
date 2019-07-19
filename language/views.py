@@ -9,6 +9,9 @@ from django.shortcuts import redirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
+import sys
+from .gap import *
+
 
 # Create your views here.
 
@@ -37,7 +40,8 @@ def burarra(request):
             print(form_p.cleaned_data['translation'])
             burarra_translation = Burarra.objects.create(phrase=phrase, translation_text=form_p.cleaned_data['translation'])
             burarra_translation.save()
-            phrase = random.choice(Phrase.objects.all())
+            # phrase = random.choice(Phrase.objects.all())
+            phrase = critical_phrase()
             form = TextForm(request.POST)
             context = {
             'phrase' : phrase,
@@ -52,7 +56,8 @@ def burarra(request):
             myfile = request.FILES['myfile']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
-            phrase = random.choice(Phrase.objects.all())
+            # phrase = random.choice(Phrase.objects.all())
+            phrase = critical_phrase()
             form = TextForm(request.POST)
             context = {
             'phrase' : phrase,
@@ -61,7 +66,8 @@ def burarra(request):
             #return render(request, 'language/burarra.html', context)
             return redirect('/language/burarra')
 
-    phrase = random.choice(Phrase.objects.all())
+    # phrase = random.choice(Phrase.objects.all())
+    phrase = critical_phrase()
     form = TextForm(request.POST)
     context = {
     'phrase' : phrase,

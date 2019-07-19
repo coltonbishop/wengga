@@ -6,19 +6,20 @@ import pickle
 import nltk
 from nltk import tokenize
 
-
 # Word Frequency Counter (word->frequency)
 frequency = {}
 known = []
 phrases = []
 
 # Loads stored data
-pickle_in = open("freq.pickle","rb")
+pickle_in = open("language/gap/freq.pickle","rb")
 frequency = pickle.load(pickle_in)
-pickle_in = open("known.pickle","rb")
+pickle_in = open("language/gap/known.pickle","rb")
 known = pickle.load(pickle_in)
-pickle_in = open("phrases.pickle","rb")
+pickle_in = open("language/gap/phrases.pickle","rb")
 phrases = pickle.load(pickle_in)
+
+print(known[0])
 
 # Reads in sources and updates frequency and known
 def read_in(english_sources, translated_sources):
@@ -31,16 +32,16 @@ def read_in(english_sources, translated_sources):
 		tokens = tokenize.sent_tokenize(file_content)
 		phrases.append(tokens)
 
-	pickle_out = open("freq.pickle","wb")
+	pickle_out = open("language/gap/freq.pickle","wb")
 	pickle.dump(frequency, pickle_out)
 	pickle_out.close()
-	pickle_out = open("phrases.pickle","wb")
+	pickle_out = open("language/gap/phrases.pickle","wb")
 	pickle.dump(phrases, pickle_out)
 	pickle_out.close()
 	# Reads in new Known Words and stores
 	for source in translated_sources:
 		add_to_known(word_list(source))
-	pickle_out = open("known.pickle","wb")
+	pickle_out = open("language/gap/known.pickle","wb")
 	pickle.dump(known, pickle_out)
 	pickle_out.close()
 
@@ -57,7 +58,7 @@ def add_to_known(word_list, save=False):
 		if word not in known:
 			known.append(word)
 	if save:
-		pickle_out = open("known.pickle","wb")
+		pickle_out = open("language/gap/known.pickle","wb")
 		pickle.dump(known, pickle_out)
 		pickle_out.close()
 
@@ -71,7 +72,7 @@ def clear():
 def clear_freq():
 	global frequency
 	frequency = {}
-	pickle_out = open("freq.pickle","wb")
+	pickle_out = open("language/gap/freq.pickle","wb")
 	pickle.dump(frequency, pickle_out)
 	pickle_out.close()
 
@@ -79,7 +80,7 @@ def clear_freq():
 def clear_phrases():
 	global phrases
 	phrases = []
-	pickle_out = open("phrases.pickle","wb")
+	pickle_out = open("language/gap/phrases.pickle","wb")
 	pickle.dump(phrases, pickle_out)
 	pickle_out.close()
 
@@ -87,7 +88,7 @@ def clear_phrases():
 def clear_known():
 	global known
 	known = []
-	pickle_out = open("known.pickle","wb")
+	pickle_out = open("language/gap/known.pickle","wb")
 	pickle.dump(known, pickle_out)
 	pickle_out.close()
 
@@ -135,6 +136,7 @@ def critical_words(x):
 
 # Returns a critical phrase to be translated
 def critical_phrase(x=0):
+
 	global phrases
 	tally = 0
 	count = x
