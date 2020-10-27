@@ -3,6 +3,4 @@
 <img src="resources/wengga.png" width = "500px" />
 </p>
 
-Wengga Translators
-
 Visit [http://wengga.herokuapp.com/](http://wengga.herokuapp.com/) to see the prototype web framework.
